@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PETS-CRUD</title>
+</head>
+<body>
+    <h1>Pets</h1>
+
+    <nav>
+        <a href="pets/add">Add a Pet</a>
+    </nav>
+    <ul>
+  <% for (const pet of database) { %> 
+    <li>
+        My name is <%=pet.name %> My age is <%=pet.age %> and I am a <%=pet.type %> <br/>
+        <a href="/pets/<%=pet.id%>">Show</a>
+        <br/>
+        <a href="/pets/<%=pet.id%>/edit">Edit</a>
+        <form method="post" action="/pets/<%=pet.id%>/delete">
+            <button type="submit">Delete</button>
+        </form>
+    
+        <br/>
+    </li>
+    <% } %>
+    </ul>
+</body>
+</html>
