@@ -4,7 +4,7 @@ const app = express();
 app.set('view engine', 'ejs');
 
 //////////////////////////////////////////////
-////// MIDDLEWARES
+////// MIDDLEWARES MVC nomas
 /////////////////////////////////////////////
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: true}))
