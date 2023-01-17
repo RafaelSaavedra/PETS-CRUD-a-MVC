@@ -4,7 +4,7 @@ const app = express();
 app.set('view engine', 'ejs');
 
 //////////////////////////////////////////////
-////// MIDDLEWARES BranchMVC
+////// MIDDLEWARES BranchMVC lista
 /////////////////////////////////////////////
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: true}))
