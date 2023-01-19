@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose')
 const morgan = require('morgan');
 const app = express();
 const PORT = 4000
@@ -13,6 +14,13 @@ app.use(express.urlencoded({extended: true}))
 //////////////////////////////////////////////
 ////// ROUTES
 /////////////////////////////////////////////
+
+
+//mongoose.connect('', (err) => {
+// if (err) return console.log('Error al conectar....');    
+//    return console.log('Conexión exitosa !!!');    
+//})
+
 
 app.get ('/', (req, res) => {
     // req - client request data
@@ -123,6 +131,6 @@ app.post('/pets/:id/delete', (req, res) => {
 ////////////////////////////////////////////////////
 
 app.listen(PORT, ( ) => {
-    console.log("Server listening on port ${4000}");
+    console.log(`Server listening on port ${4000}`);
     
 })

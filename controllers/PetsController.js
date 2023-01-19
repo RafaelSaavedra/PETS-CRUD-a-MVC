@@ -74,7 +74,10 @@ updateOne: (req, res) => {
     getAll:(req,res) => {
         const templateVars = {database}
         res.render('pets/index',templateVars);
-        //console.log(database);  
+       // console.log(database); 
+       //console.log('Metodo:... ' +req.method);
+        
+        
          
     },
 
