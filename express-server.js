@@ -6,7 +6,7 @@ const PORT = 4000
 app.set('view engine', 'ejs');
 
 //////////////////////////////////////////////
-////// MIDDLEWARES BranchMVC lista
+////// MIDDLEWARES BranchMVC MONGO
 /////////////////////////////////////////////
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: true}))
