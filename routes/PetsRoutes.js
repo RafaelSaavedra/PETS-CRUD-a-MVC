@@ -4,17 +4,17 @@ const PetsController = require ('../controllers/PetsController');
 const router = express.Router();
 
 
-router.get('/routes/PetsRoutes', PetsController.getSg);
+//router.get('/routes/PetsRoutes', PetsController.getSg);
 
 
 ///CREATE OPERATIONS
 //CREATE(FORM)
 
-router.get('/pets/add', PetsController.CreateForm);
+router.get('/pets/add', PetsController.createForm);
 
 //CREATE
 
-router.post('/pets', PetsController.Create);
+router.post('/pets', PetsController.create);
 
 ///UPDATE OPERATIONS
 //UPDATE(FORM)

@@ -4,31 +4,28 @@
 ////////////////////////////////////////////////
 
 let database = [
-    {id: 1, name: 'Stanley', age: 4, type: 'cat'},
+    {id: "1", name: 'Stanley', age: 4, type: 'cat'},
     {id: 2, name: 'Dr Toby', age: 7, type: 'dog'},
     {id: 3, name: 'Juanita', age: 1, type: 'cat'},
     {id: 4, name: 'Camilla', age: 2, type: 'hamster'},
     {id: 5, name: 'Little Boots', age: 4, type: 'dog'},
 ];
 
+const Pet = require('../models/Pet');
 
-module.exports = {
-
-    getSg : (req, res) => {
-        res.send('Mascotas....desde el controlador')
-    },
+module.exports = {    
 
 /////////////CREATE OPERATIONS
 //////////CREATE FORM
 
-CreateForm: (req, res) => {
+createForm: (req, res) => {
     
     res.render('pets/add');
 },
 
 //////////CREATE
 
-Create: (req, res) => {
+create: (req, res) => {
     //console.log(req.body);
     const newPet = {
         id: database.length + 1,
@@ -36,10 +33,20 @@ Create: (req, res) => {
         type: req.body.type,
         age: Number(req.body.age),
     }
+
     database.push(newPet)
+    const pet = new Pet (newPet)
+    const savedPet = pet.save()
+      // console.log(savedPet);
+    res.redirect(`/pets/${savedPet.id}`); 
+   // res.render(`pets`, savedPet) 
+    //console.log('savedPet');
     
-    res.redirect(`/pets/${newPet.id}`);  
+    //res.render(`/pets/${savedPet._id}`)
 },
+
+
+
 
 //////////UPDATE FORM
 
@@ -70,27 +77,40 @@ updateOne: (req, res) => {
 },
 
 ///////////READ ALL
-
+    
     getAll:(req,res) => {
-        const templateVars = {database}
-        res.render('pets/index',templateVars);
-       // console.log(database); 
-       //console.log('Metodo:... ' +req.method);
+       const templateVars = {database}
+       //const pet = new Pet (savedPets)
+       //const SavedPets = Pet.find()
+       //console.log(savedPets);
+       
+         
+
+       res.render('pets/index',templateVars);
+       //res.render('pets/index',SavedPets);
+
+        //console.log(database); 
+        //console.log('Metodo:... ' +req.method);
         
         
          
     },
-
+    
 ////////////READ ONE    
 
     getOne:  (req,res) => {
-        const petID = Number(req.params.id);
+         const petID = Number(req.params.id);
         const pet = database.find(petElement => petElement.id === petID)
-        const templateVars = {pet}
+       Pet.findById(req.params.id)
+        .then((pet) => {
+            const templateVars = { pet }
+            res.render('pets/show',templateVars);
+        })
+        .catch((err) => {
+            console.log(err);
+            //alert("error")
+        })
         
-        
-        
-        res.render('pets/show',templateVars);
     
     },
 
@@ -105,3 +125,111 @@ updateOne: (req, res) => {
         res.redirect('/pets');
     }
 }
+
+/*
+//module.exports= {
+    
+const crear = (req, res) => {
+        const pet = newPet = { 
+            name: req.body.name,
+            type: req.body.type,
+            age: Number(req.body.age),}
+        const savedPet = pet.create()
+        console.log(savedPet);
+        console.log(savedPet.name);    
+    }
+
+Create : async () => {
+    const pet = new Pet ({name: database[0].name, type: req.body.type, age : 77})
+    const savedPet = await pet.save()
+    console.log(savedPet);
+    console.log(savedPet.name);    
+}
+
+crear()
+*/
+//module.exports = {
+
+
+//crear()
+/*
+const buscarTodo =async () => {
+    const pets = await Pet.find()
+    console.log(pets);    
+}
+
+buscarTodo();
+
+const buscarUno = async () => {
+    const pet = await Pet.findOne({name: 'Pedro'})
+    console.log(pet)
+}
+
+//buscarUno()
+
+const actualizar = async () => {
+    const pet = await Pet.findOne({ name: 'Pedro'})
+    console.log(pet)
+    pet.age = 30
+    await pet.save()
+}
+
+//actualizar()
+
+const eliminar = async () => {
+    const pet = await Pet.findOne({ name:'Pedro'})
+    console.log(pet)
+    if (pet){
+        await pet.remove()
+    }
+}
+
+//eliminar()
+
+
+
+
+
+   const getall = (req, res) => {
+        //res.send('Mascotas....desde el controlador')
+        Pet.findAll()
+        .then((result) =>{
+            console.log(' res.json(result)')
+        })
+        .catch((err) => {
+            res.send('Hola desde el controlador!!! Todo salió mal :(')
+        })
+    }
+
+getall()
+
+*/
+
+
+/////CONECTA A MONGO PERO FUERA DE MODULE EXPORTS:
+
+const crear = async () => {
+    const pet = new Pet ({name: 'Pickles', type: 'Dog', age : 77})
+    const savedPet = await pet.save()
+    console.log(savedPet);
+    console.log(savedPet.name);    
+}
+
+//crear()
+
+///INTENTO FALLIDO USANDO EL MISMO FORMATO:
+
+// Crear : (req, res) => {
+//     const pet = new Pet = { 
+//         name: req.body.name,
+//         type: req.body.type,
+//         age: Number(req.body.age),}
+//         const savedPet = pet.create()
+//         console.log(savedPet);
+//     //console.log(savedPet.name);    
+// },
+
+// crear()
+
+
+

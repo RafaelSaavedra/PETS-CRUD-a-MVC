@@ -8,33 +8,48 @@ app.set('view engine', 'ejs');
 //////////////////////////////////////////////
 ////// MIDDLEWARES BranchMVC MONGO
 /////////////////////////////////////////////
+
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: true}))
+
+////////////////////////////////////////////////////
+////// LOCAL SERVER LISTENING
+////////////////////////////////////////////////////
+
+app.listen(PORT, ( ) => {
+    console.log(`Server listening on port ${4000}`);    
+})
+
+/////// CONNECTING TO EXTERNAL SERVER
+
+mongoose.connect('mongodb+srv://Rafael:15Anestesiologia20@cluster0.rnudzg3.mongodb.net/PetsCrud-mvc?retryWrites=true&w=majority'
+, (err) => {
+    if( err) return console.log('Error al conectar a mongo...');
+    return console.log('Conexión a mongo exitosa!'); 
+})
 
 //////////////////////////////////////////////
 ////// ROUTES
 /////////////////////////////////////////////
 
-
-//mongoose.connect('', (err) => {
-// if (err) return console.log('Error al conectar....');    
-//    return console.log('Conexión exitosa !!!');    
-//})
-
-
-app.get ('/', (req, res) => {
-    // req - client request data
-    // res - response object goes to client
-
-    res.send('Helloooo World!!! :) 🌎');
-})
-
-///CREATE OPERATIONS
-//CREATE(FORM)
+///RUNNING THE SHOW
 
 const PetsRoutes = require('./routes/PetsRoutes')
 
 app.use(PetsRoutes);
+
+
+
+
+//app.getsg ('/', (req, res) => {
+    // req - client request data
+    // res - response object goes to client
+//    res.send('Helloooo World!!! :) 🌎');
+//})
+
+///CREATE OPERATIONS
+//CREATE(FORM)
+
 
 /*
 //CREATE
@@ -126,11 +141,3 @@ app.post('/pets/:id/delete', (req, res) => {
 
 */
 
-////////////////////////////////////////////////////
-////// SERVER LISTENING
-////////////////////////////////////////////////////
-
-app.listen(PORT, ( ) => {
-    console.log(`Server listening on port ${4000}`);
-    
-})
