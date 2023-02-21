@@ -4,7 +4,7 @@
 ////////////////////////////////////////////////
 
 let database = [
-    {id: "1", name: 'Stanley', age: 4, type: 'cat'},
+    {id: 1, name: 'Stanley', age: 4, type: 'cat'},
     {id: 2, name: 'Dr Toby', age: 7, type: 'dog'},
     {id: 3, name: 'Juanita', age: 1, type: 'cat'},
     {id: 4, name: 'Camilla', age: 2, type: 'hamster'},
@@ -13,7 +13,9 @@ let database = [
 
 const Pet = require('../models/Pet');
 
-module.exports = {    
+module.exports = {   
+    
+
 
 /////////////CREATE OPERATIONS
 //////////CREATE FORM
@@ -26,23 +28,29 @@ createForm: (req, res) => {
 //////////CREATE
 
 create: (req, res) => {
-    //console.log(req.body);
+    console.log(req.body);
     const newPet = {
-        id: database.length + 1,
         name: req.body.name,
         type: req.body.type,
         age: Number(req.body.age),
     }
-
-    database.push(newPet)
-    const pet = new Pet (newPet)
-    const savedPet = pet.save()
-      // console.log(savedPet);
-    res.redirect(`/pets/${savedPet.id}`); 
-   // res.render(`pets`, savedPet) 
-    //console.log('savedPet');
     
-    //res.render(`/pets/${savedPet._id}`)
+    const pet = new Pet(newPet)
+    
+    // pet.save() devuelve una promesa
+    savedPet = pet.save()
+    
+    savedPet
+        // Respondo exitosamente
+        .then((myPet) => {
+            
+            res.render(`pets/show`, myPet);
+          // res.redirect(`pets/show`, myPet);
+        })
+        // Respondo si hay error
+        .catch((error) => {
+            res.status(400).send("Hubo un error");
+        })
 },
 
 
@@ -79,14 +87,36 @@ updateOne: (req, res) => {
 ///////////READ ALL
     
     getAll:(req,res) => {
-       const templateVars = {database}
-       //const pet = new Pet (savedPets)
-       //const SavedPets = Pet.find()
-       //console.log(savedPets);
+        
+        const newPet = {
+            name: req.body.name,
+            type: req.body.type,
+            age: Number(req.body.age),
+        }
+        
+    
+       //const templateVars = {database}
+       const pet = new Pet (newPet)
+      // const pet = new Pet(newPet);
+        //pets = pet.get();
+        pets = pet.find()
+       pets
+        // Respondo exitosamente
+         .then((pets) => {
+             //res.render(`pets/show`, pets);
+            //console.log(pets);
+            res.render('pets/index',pets);
+            //res.send('/pets',pets);
+            console.log(pets);
+         })
+         // Respondo si hay error
+         .catch((error) => {
+             res.status(400).send("Hubo un error");
+         })
        
          
 
-       res.render('pets/index',templateVars);
+
        //res.render('pets/index',SavedPets);
 
         //console.log(database); 
@@ -99,12 +129,10 @@ updateOne: (req, res) => {
 ////////////READ ONE    
 
     getOne:  (req,res) => {
-         const petID = Number(req.params.id);
-        const pet = database.find(petElement => petElement.id === petID)
-       Pet.findById(req.params.id)
+       Pet.findById(req.params.name)
         .then((pet) => {
-            const templateVars = { pet }
-            res.render('pets/show',templateVars);
+            const Pets = { pet }
+            res.render('pets/show',pet);
         })
         .catch((err) => {
             console.log(err);

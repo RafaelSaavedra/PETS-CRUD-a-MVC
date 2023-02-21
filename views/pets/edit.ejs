@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Edit Pet</h1>
-    <form  method="POST" action="/pets/<%= pet.id%>">
+<form method ="POST" action ="/pets">
         <label for="name">
             Name:
             <input name="name" value="<%= pet.name %>" type="text">
@@ -24,6 +24,6 @@
             <input name="age" value="<%= pet.age %>" type="number">
         </label>
         <button type="submit">Submit</button>
-    </form>
+        </form>
  </body>
 </html>

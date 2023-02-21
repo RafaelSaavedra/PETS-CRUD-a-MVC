@@ -15,11 +15,11 @@
     <ul>
   <% for (const pet of database) { %> 
     <li>
-        My name is <%=pet.name %> My age is <%=pet.age %> and I am a <%=pet.type %> <br/>
-        <a href="/pets/<%=pet.id%>">Show</a>
+        My name is <%=name %> My age is <%=age %> and I am a <%=type %> <br/>
+        <a href="/pets/<%=savedPet.id%>">Show</a>
         <br/>
-        <a href="/pets/<%=pet.id%>/edit">Edit</a>
-        <form method="post" action="/pets/<%=pet.id%>/delete">
+        <a href="/pets/<%=savedPet.id%>/edit">Edit</a>
+        <form method="post" action="/pets/<%=savedPet.id%>/delete">
             <button type="submit">Delete</button>
         </form>
     

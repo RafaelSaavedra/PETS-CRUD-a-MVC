@@ -14,7 +14,7 @@ router.get('/pets/add', PetsController.createForm);
 
 //CREATE
 
-router.post('/pets', PetsController.create);
+router.post('/pets/show', PetsController.create);
 
 ///UPDATE OPERATIONS
 //UPDATE(FORM)
